@@ -1,0 +1,3 @@
+$profile = Get-NetConnectionProfile -InterfaceIU
+$profile.NetworkCategory = 'DomainAuthenticated' 
+Set-NetConnectionProfile -InputObject $profile
