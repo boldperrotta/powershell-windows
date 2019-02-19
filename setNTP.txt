@@ -1,0 +1,1 @@
+w32tm /config /manualpeerlist:pool.ntp.org /syncfromflags:MANUAL && net stop w32time && net start w32time && w32tm /resync
