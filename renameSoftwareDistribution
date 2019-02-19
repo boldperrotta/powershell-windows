@@ -1,0 +1,2 @@
+rename c:\windows\softwaredistribution c:\windows\softwaredistribution-bak
+mkdir c:\c:\windows\softwaredistribution
