@@ -137,6 +137,7 @@ $get = [xml]@'
    <item>longName</item>
    <item>auth:name</item>
    <item>mail:address</item>
+   <item>tagId</item>
   </selectProps>
    <options xmlns:soap-enc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:itt="http://www.ricoh.co.jp/xmlns/schema/rdh/commontypes" xsi:type="soap-enc:Array" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:t="http://www.ricoh.co.jp/xmlns/schema/rdh/commontypes" xsi:arrayType="itt:property[1]">
     <item>
@@ -167,6 +168,7 @@ try
        LongName  = (%{$_.item} | ?{$_.propName -eq "longname"}).propVal
        UserCode  = (%{$_.item} | ?{$_.propName -eq "auth:name"}).propVal
        Mail      = (%{$_.item} | ?{$_.propName -eq "mail:address"}).propVal
+       Title    = (%{$_.item} | ?{$_.propName -eq "tagId"}).propVal
     }} | sort Index
 }
 catch
@@ -229,7 +231,10 @@ if($FolderPath)
 {
 $add.Envelope.Body.putObjects.propListList.item.AppendChild((ConvertTo-RicohItemList -HashTable @{"remoteFolder:path"=$FolderPath} -xml $add)) | Out-Null
 }
-
+if($TagID)
+{
+$add.Envelope.Body.putObjects.propListList.item.AppendChild((ConvertTo-RicohItemList -HashTable @{"tagId"=$TagId} -xml $add)) | Out-Null
+}
 $add.Envelope.Body.putObjects.propListList.arrayType = "itt:string[]["+$add.Envelope.Body.putObjects.propListList.item.item.count+"]"
 [xml]$xml = iwr $url -Method Post -ContentType "text/xml" -Headers @{SOAPAction="http://www.ricoh.co.jp/xmlns/soap/rdh/udirectory#putObjects"} -Body $add
 }
