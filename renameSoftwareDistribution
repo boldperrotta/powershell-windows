@@ -1,2 +1,7 @@
+net stop wuauserv
+net stop bits
 rename c:\windows\softwaredistribution c:\windows\softwaredistribution-bak
 mkdir c:\c:\windows\softwaredistribution
+net start wuauserv
+net start bits
+wuauclt /detectnow
